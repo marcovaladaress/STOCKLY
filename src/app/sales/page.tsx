@@ -27,7 +27,7 @@ const Sales = async () => {
               Nova Venda
             </Button>
           </SheetTrigger>
-          <UpsertSheetContent productOptions={productOptions} />
+          <UpsertSheetContent productOptions={productOptions}  products={JSON.parse(JSON.stringify(product))}/>
         </Sheet>
       </div>
     </div>
