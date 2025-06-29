@@ -7,7 +7,7 @@ import AddProductButton from "./_components/add-product-button";
 const ProductsPage = async () => {
   const products = await getProducts();
   return (
-    <div className="m-8 w-full space-y-8 rounded-lg bg-white p-8">
+    <div className="m-8 w-full space-y-8 rounded-lg bg-white p-8 overflow-auto">
       <div className="flex w-full items-center justify-between">
         <div className="space-y-1">
           <span className="text-muted-foreground text-xs font-semibold">
