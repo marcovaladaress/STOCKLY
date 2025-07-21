@@ -27,6 +27,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
+import { toast } from "sonner";
 
 interface UpsertProductDialogContentProps {
   defaultValues?: UpsertProductSchema;
@@ -53,6 +54,7 @@ const UpsertProductDialogContent = ({
     try {
       await upsertProduct({...data, id: defaultValues?. id});
       onSucess?.();
+      toast.success("Produto adicionado com sucesso")
     } catch (error) {
       console.error(error);
     }

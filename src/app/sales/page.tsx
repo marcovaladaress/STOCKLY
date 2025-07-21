@@ -28,6 +28,7 @@ const Sales = async () => {
             </Button>
           </SheetTrigger>
           <UpsertSheetContent productOptions={productOptions}  products={JSON.parse(JSON.stringify(product))}/>
+            
         </Sheet>
       </div>
     </div>

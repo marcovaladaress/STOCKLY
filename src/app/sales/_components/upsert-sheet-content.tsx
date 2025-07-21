@@ -34,6 +34,7 @@ import { PlusIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import TableDropdownMenu from "./table-dropdown-menu";
 
 const formSchema = z.object({
   productId: z.string().uuid({ message: "O produto é obrigátorio" }),
@@ -71,13 +72,13 @@ const UpsertSheetContent = ({
 
   const onSubmite = (data: FormSchema) => {
     const selectedProduct = products.find(
-      (products) => products.id === data.productId,
+      products => products.id === data.productId,
     );
     if (!selectedProduct) return;
 
     setSelectProducts((currentProducts) => {
       const existingProduct = currentProducts.find(
-        (product) => product.id === selectedProduct.id,
+        product => product.id === selectedProduct.id,
       );
       if (existingProduct) {
         return currentProducts.map((product) => {
@@ -100,13 +101,19 @@ const UpsertSheetContent = ({
       ];
     });
     form.reset();
-  };
+  };    
 
   const productTotal = useMemo(()=> {
     return selectedProducts.reduce((acc, product) => {
       return acc + product.price * product.quantity;
     },0)
   }, [selectedProducts])
+
+  const onDelete = (productId: string) => {
+    setSelectProducts((currentProducts)=> {
+      return currentProducts.filter((product)=> product.id !== productId)
+    })
+  }
 
   return (
     <SheetContent className="!max-w-[550px]">
@@ -169,8 +176,9 @@ const UpsertSheetContent = ({
           <TableRow>
             <TableHead>Produto</TableHead>
             <TableHead>Preço Unitário</TableHead>
-            <TableHead>Qauantidade</TableHead>
+            <TableHead>Quantidade</TableHead>
             <TableHead>Total</TableHead>
+            <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -182,6 +190,9 @@ const UpsertSheetContent = ({
               <TableCell>
                 {formatCurrency(product.price * product.quantity)}
               </TableCell>
+              <TableCell>
+               <TableDropdownMenu product={product} onDelete={()=> onDelete(product.id)}/>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -189,6 +200,7 @@ const UpsertSheetContent = ({
           <TableRow>
             <TableCell colSpan={3}>Total</TableCell>
             <TableCell>{formatCurrency(productTotal)}</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableFooter>
       </Table>
