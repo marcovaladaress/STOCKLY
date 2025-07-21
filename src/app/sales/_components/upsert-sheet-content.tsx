@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import {
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
@@ -30,11 +31,13 @@ import {
 } from "@/components/ui/table";
 import { Product } from "@/generated/prisma";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, ShoppingCartIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import TableDropdownMenu from "./table-dropdown-menu";
+import { createSale } from "@/app/_actions/sales/create-sale";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   productId: z.string().uuid({ message: "O produto é obrigátorio" }),
@@ -72,15 +75,24 @@ const UpsertSheetContent = ({
 
   const onSubmite = (data: FormSchema) => {
     const selectedProduct = products.find(
-      products => products.id === data.productId,
+      (products) => products.id === data.productId,
     );
     if (!selectedProduct) return;
 
     setSelectProducts((currentProducts) => {
       const existingProduct = currentProducts.find(
-        product => product.id === selectedProduct.id,
+        (product) => product.id === selectedProduct.id,
       );
       if (existingProduct) {
+        const productIsOutOfStock =
+          existingProduct.quantity + data.quantity > existingProduct.stock;
+        if (productIsOutOfStock) {
+          form.setError("quantity", {
+            message: "Quantidade insuficiente em estoque",
+          });
+          return currentProducts;
+        }
+        form.reset();
         return currentProducts.map((product) => {
           if (product.id === selectedProduct.id) {
             return {
@@ -91,6 +103,14 @@ const UpsertSheetContent = ({
           return product;
         });
       }
+      const productIsOutOfStock = data.quantity > selectedProduct.stock;
+      if (productIsOutOfStock) {
+        form.setError("quantity", {
+          message: "Quantidade insuficiente em estoque",
+        });
+        return currentProducts;
+      }
+      form.reset();
       return [
         ...currentProducts,
         {
@@ -100,20 +120,35 @@ const UpsertSheetContent = ({
         },
       ];
     });
-    form.reset();
-  };    
 
-  const productTotal = useMemo(()=> {
+  };
+
+  const productTotal = useMemo(() => {
     return selectedProducts.reduce((acc, product) => {
       return acc + product.price * product.quantity;
-    },0)
-  }, [selectedProducts])
+    }, 0);
+  }, [selectedProducts]);
 
   const onDelete = (productId: string) => {
-    setSelectProducts((currentProducts)=> {
-      return currentProducts.filter((product)=> product.id !== productId)
-    })
-  }
+    setSelectProducts((currentProducts) => {
+      return currentProducts.filter((product) => product.id !== productId);
+    });
+  };
+
+  const onSubmiteSale = async () => {
+    try {
+      await createSale({
+        products: selectedProducts.map((products) => ({
+          id: products.id,
+          quantity: products.quantity,
+        })),
+      });
+      toast.success("Venda realizada com sucesso");
+    } catch (error) {
+      toast.error("Erro ao realizar a venda");
+      console.log(error);
+    }
+  };
 
   return (
     <SheetContent className="!max-w-[550px]">
@@ -170,7 +205,7 @@ const UpsertSheetContent = ({
           </Button>
         </form>
       </Form>
-      <Table >
+      <Table>
         <TableCaption>Lista de produtos adicionados á venda.</TableCaption>
         <TableHeader>
           <TableRow>
@@ -191,7 +226,10 @@ const UpsertSheetContent = ({
                 {formatCurrency(product.price * product.quantity)}
               </TableCell>
               <TableCell>
-               <TableDropdownMenu product={product} onDelete={()=> onDelete(product.id)}/>
+                <TableDropdownMenu
+                  product={product}
+                  onDelete={() => onDelete(product.id)}
+                />
               </TableCell>
             </TableRow>
           ))}
@@ -204,6 +242,16 @@ const UpsertSheetContent = ({
           </TableRow>
         </TableFooter>
       </Table>
+      <SheetFooter>
+        <Button
+          className="w-full gap-2"
+          disabled={selectedProducts.length === 0}
+          onClick={onSubmiteSale}
+        >
+          <ShoppingCartIcon />
+          Finalizar Venda
+        </Button>
+      </SheetFooter>
     </SheetContent>
   );
 };
