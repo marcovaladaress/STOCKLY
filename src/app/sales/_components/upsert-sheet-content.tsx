@@ -49,6 +49,7 @@ type FormSchema = z.infer<typeof formSchema>;
 interface UpsertSheetContentProps {
   products: Product[];
   productOptions: ComboboxOption[];
+  onSubmitSucess: () => void;
 }
 
 interface SelectProducts {
@@ -62,6 +63,7 @@ interface SelectProducts {
 const UpsertSheetContent = ({
   products,
   productOptions,
+  onSubmitSucess,
 }: UpsertSheetContentProps) => {
   const [selectedProducts, setSelectProducts] = useState<SelectProducts[]>([]);
   const form = useForm<FormSchema>({
@@ -120,7 +122,6 @@ const UpsertSheetContent = ({
         },
       ];
     });
-
   };
 
   const productTotal = useMemo(() => {
@@ -144,6 +145,7 @@ const UpsertSheetContent = ({
         })),
       });
       toast.success("Venda realizada com sucesso");
+      onSubmitSucess();
     } catch (error) {
       toast.error("Erro ao realizar a venda");
       console.log(error);
