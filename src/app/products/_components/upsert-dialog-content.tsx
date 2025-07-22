@@ -25,17 +25,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
+import { useAction } from "next-safe-action/hooks";
+import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { toast } from "sonner";
 
 interface UpsertProductDialogContentProps {
   defaultValues?: UpsertProductSchema;
-  onSucess?: () => void;
+  setDialogIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const UpsertProductDialogContent = ({
-  onSucess,
+  setDialogIsOpen,
   defaultValues,
 }: UpsertProductDialogContentProps) => {
   const form = useForm<UpsertProductSchema>({
@@ -48,16 +50,19 @@ const UpsertProductDialogContent = ({
     },
   });
 
+  const { execute: executeUpsertProduct } = useAction(upsertProduct, {
+    onError: () => {
+      toast.error("Ocorreu um erro ao salvar o produto!");
+    },
+    onSuccess: () => {
+      setDialogIsOpen(false);
+    },
+  });
+
   const isEditing = !!defaultValues;
 
   const onSubmit = async (data: UpsertProductSchema) => {
-    try {
-      await upsertProduct({...data, id: defaultValues?. id});
-      onSucess?.();
-      toast.success("Produto adicionado com sucesso")
-    } catch (error) {
-      console.error(error);
-    }
+    executeUpsertProduct(data);
   };
   return (
     <DialogContent>

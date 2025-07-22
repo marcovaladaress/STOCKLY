@@ -32,12 +32,14 @@ import {
 import { Product } from "@/generated/prisma";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusIcon, ShoppingCartIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import TableDropdownMenu from "./table-dropdown-menu";
 import { createSale } from "@/app/_actions/sales/create-sale";
 import { toast } from "sonner";
+import { useAction } from "next-safe-action/hooks";
+import { flattenValidationErrors } from "next-safe-action";
 
 const formSchema = z.object({
   productId: z.string().uuid({ message: "O produto é obrigátorio" }),
@@ -49,7 +51,7 @@ type FormSchema = z.infer<typeof formSchema>;
 interface UpsertSheetContentProps {
   products: Product[];
   productOptions: ComboboxOption[];
-  onSubmitSucess: () => void;
+  setSheetIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 interface SelectProducts {
@@ -63,9 +65,21 @@ interface SelectProducts {
 const UpsertSheetContent = ({
   products,
   productOptions,
-  onSubmitSucess,
+  setSheetIsOpen
 }: UpsertSheetContentProps) => {
   const [selectedProducts, setSelectProducts] = useState<SelectProducts[]>([]);
+
+  const { execute: executeCreateSale } = useAction(createSale, {
+    onError: ({error: { validationErrors }}) => {
+      const flattenedErrors = flattenValidationErrors(validationErrors);
+      toast.error(flattenedErrors.formErrors[0]);
+    },
+    onSuccess: () => {
+      toast.success("Venda realizada com sucesso");
+      setSheetIsOpen(false)
+    }
+    
+  });
   const form = useForm<FormSchema>({
     shouldUnregister: true,
     resolver: zodResolver(formSchema),
@@ -137,19 +151,12 @@ const UpsertSheetContent = ({
   };
 
   const onSubmiteSale = async () => {
-    try {
-      await createSale({
-        products: selectedProducts.map((products) => ({
-          id: products.id,
-          quantity: products.quantity,
-        })),
-      });
-      toast.success("Venda realizada com sucesso");
-      onSubmitSucess();
-    } catch (error) {
-      toast.error("Erro ao realizar a venda");
-      console.log(error);
-    }
+    executeCreateSale({
+      products: selectedProducts.map((product) => ({
+        id: product.id,
+        quantity: product.quantity,
+      })),
+    });
   };
 
   return (

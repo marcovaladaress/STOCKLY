@@ -26,7 +26,7 @@ const CreateSaleButton = (props: CreateSaleButtonProps) => {
       </SheetTrigger>
       <UpsertSheetContent
        {...props}
-       onSubmitSucess={() => setSheetIsOpen (false)}
+       setSheetIsOpen={() => setSheetIsOpen (false)}
       />
     </Sheet>
   );
