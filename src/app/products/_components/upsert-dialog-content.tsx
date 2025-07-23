@@ -48,6 +48,7 @@ const UpsertProductDialogContent = ({
       price: 0,
       stock: 1,
     },
+    
   });
 
   const { execute: executeUpsertProduct } = useAction(upsertProduct, {
@@ -55,15 +56,19 @@ const UpsertProductDialogContent = ({
       toast.error("Ocorreu um erro ao salvar o produto!");
     },
     onSuccess: () => {
+      toast.success("Produto salvo com sucesso")
       setDialogIsOpen(false);
     },
+    
   });
+
+  const onSubmit = async (data: UpsertProductSchema) => {
+    executeUpsertProduct({...data, id: defaultValues?.id});
+  };
 
   const isEditing = !!defaultValues;
 
-  const onSubmit = async (data: UpsertProductSchema) => {
-    executeUpsertProduct(data);
-  };
+ 
   return (
     <DialogContent>
       <Form {...form}>
