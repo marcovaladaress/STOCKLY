@@ -27,18 +27,19 @@ const Sales = async () => {
 
   return (
     <div className="m-8 w-full space-y-8 overflow-auto rounded-lg bg-white p-8">
-      <Header>
+      <Header className="flex justify-between">
         <HeaderLeft>
           <HeaderSubTitle>Vendas</HeaderSubTitle>
           <HeaderTitle>Vendas</HeaderTitle>
         </HeaderLeft>
+        <HeaderRight>
+          <UpsertSaleButton
+            products={JSON.parse(JSON.stringify(product))}
+            productOptions={productOptions}
+          />
+        </HeaderRight>
       </Header>
-      <HeaderRight>
-        <UpsertSaleButton
-          products={JSON.parse(JSON.stringify(product))}
-          productOptions={productOptions}
-        />
-      </HeaderRight>
+
       <DataTable
         columns={SaleTablesColumns}
         data={JSON.parse(JSON.stringify(tableData))}
