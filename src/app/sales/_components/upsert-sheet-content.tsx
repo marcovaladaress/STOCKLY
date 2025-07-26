@@ -174,7 +174,7 @@ const UpsertSheetContent = ({
   };
 
   return (
-    <SheetContent className="!max-w-[550px]">
+    <SheetContent className="!max-w-[650px]">
       <SheetHeader>
         <SheetTitle>Nova Venda</SheetTitle>
         <SheetDescription>

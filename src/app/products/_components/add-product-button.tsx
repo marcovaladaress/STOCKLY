@@ -21,7 +21,7 @@ const AddProductButton = () => {
   return (
     <Dialog open={dialogIsOpen} onOpenChange={setDialogIsOpen} >
       <DialogTrigger asChild>
-        <Button className="text-primary-foreground hover:bg-primary/70">
+        <Button className="text-primary-foreground  hover:bg-primary/70">
           <PlusIcon className="h-4 w-4" />
           Novo produto
         </Button>

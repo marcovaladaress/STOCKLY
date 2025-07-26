@@ -4,6 +4,12 @@ import UpsertSaleButton from "./_components/create-sale-button";
 import { DataTable } from "../_components/data-table";
 import { SaleTablesColumns } from "./_components/table-columns";
 import { getSales } from "../_data-acess/sale/get-sales";
+import Header, {
+  HeaderLeft,
+  HeaderRight,
+  HeaderSubTitle,
+  HeaderTitle,
+} from "../_components/header";
 
 const Sales = async () => {
   const sale = await getSales();
@@ -15,24 +21,24 @@ const Sales = async () => {
 
   const tableData = sale.map((sale) => ({
     ...sale,
-    products: product, 
+    products: product,
     productOptions,
   }));
 
   return (
     <div className="m-8 w-full space-y-8 overflow-auto rounded-lg bg-white p-8">
-      <div className="flex w-full items-center justify-between">
-        <div className="space-y-1">
-          <span className="text-muted-foreground text-xs font-semibold">
-            Vendas
-          </span>
-          <h1 className="text-2xl font-bold">Vendas</h1>
-        </div>
+      <Header>
+        <HeaderLeft>
+          <HeaderSubTitle>Vendas</HeaderSubTitle>
+          <HeaderTitle>Vendas</HeaderTitle>
+        </HeaderLeft>
+      </Header>
+      <HeaderRight>
         <UpsertSaleButton
           products={JSON.parse(JSON.stringify(product))}
           productOptions={productOptions}
         />
-      </div>
+      </HeaderRight>
       <DataTable
         columns={SaleTablesColumns}
         data={JSON.parse(JSON.stringify(tableData))}

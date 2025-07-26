@@ -17,7 +17,7 @@ export const productTableColumns: ColumnDef<Product>[] = [
   },
   {
     accessorKey: "price",
-    header: "Valor unitário",
+    header: "Valor unitário" ,
     cell: ({ row }) => {
       const product = row.original;
       return formatCurrency(Number(product.price));
