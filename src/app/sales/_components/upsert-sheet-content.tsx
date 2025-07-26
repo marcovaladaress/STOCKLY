@@ -36,7 +36,7 @@ import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import TableDropdownMenu from "./upsert-table-dropdown-menu";
-import { createSale } from "@/app/_actions/sales/create-sale";
+import { upsertSale } from "@/app/_actions/sales/upsert-sale";
 import { toast } from "sonner";
 import { useAction } from "next-safe-action/hooks";
 import { flattenValidationErrors } from "next-safe-action";
@@ -49,36 +49,40 @@ const formSchema = z.object({
 type FormSchema = z.infer<typeof formSchema>;
 
 interface UpsertSheetContentProps {
+  saleId?: string;
   products: Product[];
   productOptions: ComboboxOption[];
   setSheetIsOpen: Dispatch<SetStateAction<boolean>>;
+  defaultSelectedProducts?: SelectProducts[];
 }
 
 interface SelectProducts {
   id: string;
   name: string;
   price: number;
-  stock: number;
   quantity: number;
 }
 
 const UpsertSheetContent = ({
+  saleId,
   products,
   productOptions,
-  setSheetIsOpen
+  setSheetIsOpen,
+  defaultSelectedProducts,
 }: UpsertSheetContentProps) => {
-  const [selectedProducts, setSelectProducts] = useState<SelectProducts[]>([]);
+  const [selectedProducts, setSelectProducts] = useState<SelectProducts[]>(
+    defaultSelectedProducts ?? [],
+  );
 
-  const { execute: executeCreateSale } = useAction(createSale, {
-    onError: ({error: { validationErrors }}) => {
+  const { execute: executeUpsertSale } = useAction(upsertSale, {
+    onError: ({ error: { validationErrors } }) => {
       const flattenedErrors = flattenValidationErrors(validationErrors);
       toast.error(flattenedErrors.formErrors[0]);
     },
     onSuccess: () => {
       toast.success("Venda realizada com sucesso");
-      setSheetIsOpen(false)
-    }
-    
+      setSheetIsOpen(false);
+    },
   });
   const form = useForm<FormSchema>({
     shouldUnregister: true,
@@ -91,7 +95,7 @@ const UpsertSheetContent = ({
 
   const onSubmite = (data: FormSchema) => {
     const selectedProduct = products.find(
-      (products) => products.id === data.productId,
+      (product) => product.id === data.productId,
     );
     if (!selectedProduct) return;
 
@@ -101,14 +105,19 @@ const UpsertSheetContent = ({
       );
       if (existingProduct) {
         const productIsOutOfStock =
-          existingProduct.quantity + data.quantity > existingProduct.stock;
+          existingProduct.quantity + data.quantity > selectedProduct.stock;
+
         if (productIsOutOfStock) {
-          form.setError("quantity", {
-            message: "Quantidade insuficiente em estoque",
-          });
+          setTimeout(() => {
+            form.setError("quantity", {
+              message: "Quantidade insuficiente em estoque",
+            });
+          }, 0);
           return currentProducts;
         }
-        form.reset();
+        setTimeout(() => {
+          form.reset();
+        }, 0);
         return currentProducts.map((product) => {
           if (product.id === selectedProduct.id) {
             return {
@@ -121,12 +130,16 @@ const UpsertSheetContent = ({
       }
       const productIsOutOfStock = data.quantity > selectedProduct.stock;
       if (productIsOutOfStock) {
-        form.setError("quantity", {
-          message: "Quantidade insuficiente em estoque",
-        });
+        setTimeout(() => {
+          form.setError("quantity", {
+            message: "Quantidade insuficiente em estoque",
+          });
+        }, 0);
         return currentProducts;
       }
-      form.reset();
+      setTimeout(() => {
+        form.reset();
+      }, 0);
       return [
         ...currentProducts,
         {
@@ -151,7 +164,8 @@ const UpsertSheetContent = ({
   };
 
   const onSubmiteSale = async () => {
-    executeCreateSale({
+    executeUpsertSale({
+      id: saleId,
       products: selectedProducts.map((product) => ({
         id: product.id,
         quantity: product.quantity,

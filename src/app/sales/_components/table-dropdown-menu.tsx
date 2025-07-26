@@ -19,7 +19,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Sale } from "@/generated/prisma";
+import { Sheet, SheetTrigger } from "@/components/ui/sheet";
+import { Product } from "@/generated/prisma";
 import {
   MoreHorizontalIcon,
   ClipboardCopy,
@@ -28,12 +29,24 @@ import {
 } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
+import UpsertSheetContent from "./upsert-sheet-content";
+import { useState } from "react";
+import { ComboboxOption } from "@/components/combobax";
+import { GetSalesDto } from "@/app/_data-acess/sale/get-sales";
 
 interface SaleTableDropdownMenuProps {
-  sale: Pick<Sale, "id">;
+  sale: Pick<GetSalesDto, "id" | "saleProducts">;
+  productOptions: ComboboxOption[];
+  products: Product[];
 }
 
-const SaleTableDropdownMenu = ({ sale }: SaleTableDropdownMenuProps) => {
+const SaleTableDropdownMenu = ({
+  sale,
+  products,
+  productOptions,
+}: SaleTableDropdownMenuProps) => {
+  const [upsertSheetIsOpen, setUpsertSheetIsOpen] = useState(false);
+
   const { execute } = useAction(deleteSale, {
     onSuccess: () => {
       toast.success("Venda deletada com sucesso");
@@ -53,46 +66,63 @@ const SaleTableDropdownMenu = ({ sale }: SaleTableDropdownMenuProps) => {
     toast.success("Venda deletada com sucesso");
   };
   return (
-    <AlertDialog>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost">
-            <MoreHorizontalIcon size={16} />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem onClick={handleCopyToClipboardClick}>
-            <ClipboardCopy size={16} />
-            Copiar Id
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <EditIcon size={16} />
-            Editar
-          </DropdownMenuItem>
-          <AlertDialogTrigger>
-            <DropdownMenuItem>
-              <TrashIcon size={16} />
-              Deletar
+    <Sheet open={upsertSheetIsOpen} onOpenChange={setUpsertSheetIsOpen}>
+      <AlertDialog>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost">
+              <MoreHorizontalIcon size={16} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={handleCopyToClipboardClick}>
+              <ClipboardCopy size={16} />
+              Copiar Id
             </DropdownMenuItem>
-          </AlertDialogTrigger>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Voçe tem certeza?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Você esta prestes a excluir esta venda. Esta ação não pode ser
-            desfeita. Deseja continuar ?
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction onClick={handleConfirmDeleteClick}>
-            Continuar
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+            <SheetTrigger asChild>
+              <DropdownMenuItem>
+                <EditIcon size={16} />
+                Editar
+              </DropdownMenuItem>
+            </SheetTrigger>
+            <AlertDialogTrigger>
+              <DropdownMenuItem>
+                <TrashIcon size={16} />
+                Deletar
+              </DropdownMenuItem>
+            </AlertDialogTrigger>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Voçe tem certeza?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Você esta prestes a excluir esta venda. Esta ação não pode ser
+              desfeita. Deseja continuar ?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmDeleteClick}>
+              Continuar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <UpsertSheetContent
+        saleId={sale.id}
+        productOptions={productOptions}
+        products={products}
+        setSheetIsOpen={setUpsertSheetIsOpen}
+        defaultSelectedProducts={sale.saleProducts.map((saleProduct) => ({
+          id: saleProduct.productId,
+          quantity: saleProduct.quantity,
+          name: saleProduct.productName,
+          price: saleProduct.unitPrice,
+        }))}
+      />
+    </Sheet>
   );
 };
 
