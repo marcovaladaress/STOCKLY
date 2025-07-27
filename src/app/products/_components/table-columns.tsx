@@ -3,7 +3,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Product } from "@/generated/prisma";
 import { ColumnDef } from "@tanstack/react-table";
-import { CircleIcon } from "lucide-react";
 import ProductTableDropdownMenu from "./dropdown-menu";
 
 const formatCurrency = (value: number) => {
@@ -37,10 +36,7 @@ export const productTableColumns: ColumnDef<Product>[] = [
           variant={product.stock > 0 ? "default" : "destructive"}
           className="items-center gap-1.5"
         >
-          <CircleIcon
-            size={12}
-            className={`${product.stock > 0 ? "fill-primary-foreground" : "fill-primary-foreground"}`}
-          />
+
           {product.stock > 0 ? "Em estoque" : "Fora de estoque"}
         </Badge>
       );
