@@ -3,11 +3,8 @@ import Header, {
   HeaderSubTitle,
   HeaderTitle,
 } from "../_components/header";
-import {
-  SummaryCardSkeleton,
-} from "./_components/summary-card";
+import { SummaryCardSkeleton } from "./_components/summary-card";
 import { getDashboard } from "../_data-acess/dashboard/get-dashboard";
-import RevenueChart from "./_components/revenue-chart";
 import MostSoldProductsItem from "./_components/most-sold-products-item";
 import TotalRevenueCard from "./_components/total-revenue-card";
 import { Suspense } from "react";
@@ -15,12 +12,11 @@ import TodayTotalRevenue from "./_components/today-revenue-card";
 import SaleRevenueCard from "./_components/sale-revenue-card";
 import TotalRevenueStock from "./_components/stock-revenue-card";
 import TotalRevenueProduct from "./_components/produc-revenue-card";
+import Last14DaysRevenueChart from "./_components/las-14-days-revenue";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Home = async () => {
-  const {
-    totalLast14DaysRevenue,
-    mostSoldProducts,
-  } = await getDashboard();
+  const { mostSoldProducts } = await getDashboard();
 
   return (
     <div className="m-8 flex w-full flex-col space-y-8 overflow-auto rounded-lg">
@@ -41,27 +37,31 @@ const Home = async () => {
       </div>
 
       <div className="grid grid-cols-3 gap-6">
-        <Suspense fallback={<SummaryCardSkeleton/>}>
-          <SaleRevenueCard/>
+        <Suspense fallback={<SummaryCardSkeleton />}>
+          <SaleRevenueCard />
         </Suspense>
 
-       <Suspense fallback={<SummaryCardSkeleton/>}>
-        <TotalRevenueStock/>
-       </Suspense>
+        <Suspense fallback={<SummaryCardSkeleton />}>
+          <TotalRevenueStock />
+        </Suspense>
 
-       <Suspense fallback={<SummaryCardSkeleton/>}>
-        <TotalRevenueProduct/>
-       </Suspense>
-
-       
+        <Suspense fallback={<SummaryCardSkeleton />}>
+          <TotalRevenueProduct />
+        </Suspense>
       </div>
       <div className="grid min-h-0 grid-cols-[1.97fr_1fr] gap-6">
-        <div className="flex h-full flex-col overflow-hidden rounded-xl bg-white p-6">
-          <p className="text-xl font-semibold text-slate-900">Receita</p>
-          <p className="text-sm text-slate-400">Últimos 14 dias</p>
-          <RevenueChart data={totalLast14DaysRevenue} />
-        </div>
-
+        <Suspense
+          fallback={
+            <Skeleton className="bg-white p-6">
+              <div className="space-y-2">
+                <div className="h-5 w-48 rounded-md bg-gray-200" />
+                <div className="h-4 w-[86.26px] rounded-md bg-gray-200" />
+              </div>
+            </Skeleton>
+          }
+        >
+          <Last14DaysRevenueChart />
+        </Suspense>
         <div className="flex h-full flex-col space-y-4 overflow-hidden rounded-xl bg-white">
           <p className="p-6 text-xl font-semibold text-slate-900">
             Produtos mais Vendidos
