@@ -1,31 +1,23 @@
-import {
-  CircleDollarSign,
-  DollarSign,
-  PackageIcon,
-  ShoppingBasket,
-} from "lucide-react";
 import Header, {
   HeaderLeft,
   HeaderSubTitle,
   HeaderTitle,
 } from "../_components/header";
-import SummaryCard, {
-  SummaryCardIcon,
-  SummaryCardTitle,
-  SummaryCardValue,
+import {
+  SummaryCardSkeleton,
 } from "./_components/summary-card";
 import { getDashboard } from "../_data-acess/dashboard/get-dashboard";
-import { formatCurrency } from "../_helpers/currency";
 import RevenueChart from "./_components/revenue-chart";
 import MostSoldProductsItem from "./_components/most-sold-products-item";
+import TotalRevenueCard from "./_components/total-revenue-card";
+import { Suspense } from "react";
+import TodayTotalRevenue from "./_components/today-revenue-card";
+import SaleRevenueCard from "./_components/sale-revenue-card";
+import TotalRevenueStock from "./_components/stock-revenue-card";
+import TotalRevenueProduct from "./_components/produc-revenue-card";
 
 const Home = async () => {
   const {
-    totalRevenue,
-    todayRevenue,
-    totalStock,
-    totalSales,
-    totalProducts,
     totalLast14DaysRevenue,
     mostSoldProducts,
   } = await getDashboard();
@@ -40,47 +32,28 @@ const Home = async () => {
       </Header>
 
       <div className="grid grid-cols-2 gap-6">
-        <SummaryCard>
-          <SummaryCardIcon>
-            <DollarSign />
-          </SummaryCardIcon>
-          <SummaryCardTitle>Receita Total</SummaryCardTitle>
-          <SummaryCardValue>{formatCurrency(totalRevenue)}</SummaryCardValue>
-        </SummaryCard>
-
-        <SummaryCard>
-          <SummaryCardIcon>
-            <DollarSign />
-          </SummaryCardIcon>
-          <SummaryCardTitle>Receita Hoje</SummaryCardTitle>
-          <SummaryCardValue>{formatCurrency(todayRevenue)}</SummaryCardValue>
-        </SummaryCard>
+        <Suspense fallback={<SummaryCardSkeleton />}>
+          <TotalRevenueCard />
+        </Suspense>
+        <Suspense fallback={<SummaryCardSkeleton />}>
+          <TodayTotalRevenue />
+        </Suspense>
       </div>
 
       <div className="grid grid-cols-3 gap-6">
-        <SummaryCard>
-          <SummaryCardIcon>
-            <CircleDollarSign />
-          </SummaryCardIcon>
-          <SummaryCardTitle>Vendas Totais</SummaryCardTitle>
-          <SummaryCardValue>{totalSales}</SummaryCardValue>
-        </SummaryCard>
+        <Suspense fallback={<SummaryCardSkeleton/>}>
+          <SaleRevenueCard/>
+        </Suspense>
 
-        <SummaryCard>
-          <SummaryCardIcon>
-            <PackageIcon />
-          </SummaryCardIcon>
-          <SummaryCardTitle>Total em Estoque</SummaryCardTitle>
-          <SummaryCardValue>{totalStock}</SummaryCardValue>
-        </SummaryCard>
+       <Suspense fallback={<SummaryCardSkeleton/>}>
+        <TotalRevenueStock/>
+       </Suspense>
 
-        <SummaryCard>
-          <SummaryCardIcon>
-            <ShoppingBasket />
-          </SummaryCardIcon>
-          <SummaryCardTitle>Produtos</SummaryCardTitle>
-          <SummaryCardValue>{totalProducts}</SummaryCardValue>
-        </SummaryCard>
+       <Suspense fallback={<SummaryCardSkeleton/>}>
+        <TotalRevenueProduct/>
+       </Suspense>
+
+       
       </div>
       <div className="grid min-h-0 grid-cols-[1.97fr_1fr] gap-6">
         <div className="flex h-full flex-col overflow-hidden rounded-xl bg-white p-6">
