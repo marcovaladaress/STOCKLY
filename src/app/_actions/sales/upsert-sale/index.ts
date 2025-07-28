@@ -13,13 +13,13 @@ export const upsertSale = actionClient
     if (isUpdate) {
       const existingSale = await db.sale.findUnique({
         where: { id },
-        include: { products: true },
+        include: { saleProducts : true },
       });
       if (!existingSale) return;
       await db.sale.delete({
         where: { id },
       });
-      for (const product of existingSale.products) {
+          for (const product of existingSale.saleProducts) {
         await db.product.update({
           where: { id: product.productId },
           data: {

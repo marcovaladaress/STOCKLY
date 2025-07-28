@@ -13,7 +13,7 @@ export const deleteSale = actionClient
         id,
       },
       include:{
-        products: true
+        saleProducts: true
       }
     });
     if(!sale) return
@@ -22,7 +22,7 @@ export const deleteSale = actionClient
             id
         }
     })
-    for (const product of sale.products){
+    for (const product of sale.saleProducts){
       await db.product.update({
         where:{
           id:product.productId,

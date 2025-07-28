@@ -1082,11 +1082,11 @@ export namespace Prisma {
    */
 
   export type SaleCountOutputType = {
-    products: number
+    saleProducts: number
   }
 
   export type SaleCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    products?: boolean | SaleCountOutputTypeCountProductsArgs
+    saleProducts?: boolean | SaleCountOutputTypeCountSaleProductsArgs
   }
 
   // Custom InputTypes
@@ -1103,7 +1103,7 @@ export namespace Prisma {
   /**
    * SaleCountOutputType without action
    */
-  export type SaleCountOutputTypeCountProductsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type SaleCountOutputTypeCountSaleProductsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SaleProductWhereInput
   }
 
@@ -2389,7 +2389,7 @@ export namespace Prisma {
     date?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    products?: boolean | Sale$productsArgs<ExtArgs>
+    saleProducts?: boolean | Sale$saleProductsArgs<ExtArgs>
     _count?: boolean | SaleCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sale"]>
 
@@ -2416,7 +2416,7 @@ export namespace Prisma {
 
   export type SaleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "createdAt" | "updatedAt", ExtArgs["result"]["sale"]>
   export type SaleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    products?: boolean | Sale$productsArgs<ExtArgs>
+    saleProducts?: boolean | Sale$saleProductsArgs<ExtArgs>
     _count?: boolean | SaleCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SaleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2425,7 +2425,7 @@ export namespace Prisma {
   export type $SalePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Sale"
     objects: {
-      products: Prisma.$SaleProductPayload<ExtArgs>[]
+      saleProducts: Prisma.$SaleProductPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2826,7 +2826,7 @@ export namespace Prisma {
    */
   export interface Prisma__SaleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    products<T extends Sale$productsArgs<ExtArgs> = {}>(args?: Subset<T, Sale$productsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SaleProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    saleProducts<T extends Sale$saleProductsArgs<ExtArgs> = {}>(args?: Subset<T, Sale$saleProductsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SaleProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3248,9 +3248,9 @@ export namespace Prisma {
   }
 
   /**
-   * Sale.products
+   * Sale.saleProducts
    */
-  export type Sale$productsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Sale$saleProductsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the SaleProduct
      */
@@ -4633,7 +4633,7 @@ export namespace Prisma {
     date?: DateTimeFilter<"Sale"> | Date | string
     createdAt?: DateTimeFilter<"Sale"> | Date | string
     updatedAt?: DateTimeFilter<"Sale"> | Date | string
-    products?: SaleProductListRelationFilter
+    saleProducts?: SaleProductListRelationFilter
   }
 
   export type SaleOrderByWithRelationInput = {
@@ -4641,7 +4641,7 @@ export namespace Prisma {
     date?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    products?: SaleProductOrderByRelationAggregateInput
+    saleProducts?: SaleProductOrderByRelationAggregateInput
   }
 
   export type SaleWhereUniqueInput = Prisma.AtLeast<{
@@ -4652,7 +4652,7 @@ export namespace Prisma {
     date?: DateTimeFilter<"Sale"> | Date | string
     createdAt?: DateTimeFilter<"Sale"> | Date | string
     updatedAt?: DateTimeFilter<"Sale"> | Date | string
-    products?: SaleProductListRelationFilter
+    saleProducts?: SaleProductListRelationFilter
   }, "id">
 
   export type SaleOrderByWithAggregationInput = {
@@ -4817,7 +4817,7 @@ export namespace Prisma {
     date: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    products?: SaleProductCreateNestedManyWithoutSaleInput
+    saleProducts?: SaleProductCreateNestedManyWithoutSaleInput
   }
 
   export type SaleUncheckedCreateInput = {
@@ -4825,7 +4825,7 @@ export namespace Prisma {
     date: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    products?: SaleProductUncheckedCreateNestedManyWithoutSaleInput
+    saleProducts?: SaleProductUncheckedCreateNestedManyWithoutSaleInput
   }
 
   export type SaleUpdateInput = {
@@ -4833,7 +4833,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    products?: SaleProductUpdateManyWithoutSaleNestedInput
+    saleProducts?: SaleProductUpdateManyWithoutSaleNestedInput
   }
 
   export type SaleUncheckedUpdateInput = {
@@ -4841,7 +4841,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    products?: SaleProductUncheckedUpdateManyWithoutSaleNestedInput
+    saleProducts?: SaleProductUncheckedUpdateManyWithoutSaleNestedInput
   }
 
   export type SaleCreateManyInput = {
@@ -4871,7 +4871,7 @@ export namespace Prisma {
     quantity: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    sale: SaleCreateNestedOneWithoutProductsInput
+    sale: SaleCreateNestedOneWithoutSaleProductsInput
     product: ProductCreateNestedOneWithoutSaleProductsInput
   }
 
@@ -4891,7 +4891,7 @@ export namespace Prisma {
     quantity?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sale?: SaleUpdateOneRequiredWithoutProductsNestedInput
+    sale?: SaleUpdateOneRequiredWithoutSaleProductsNestedInput
     product?: ProductUpdateOneRequiredWithoutSaleProductsNestedInput
   }
 
@@ -5271,9 +5271,9 @@ export namespace Prisma {
     deleteMany?: SaleProductScalarWhereInput | SaleProductScalarWhereInput[]
   }
 
-  export type SaleCreateNestedOneWithoutProductsInput = {
-    create?: XOR<SaleCreateWithoutProductsInput, SaleUncheckedCreateWithoutProductsInput>
-    connectOrCreate?: SaleCreateOrConnectWithoutProductsInput
+  export type SaleCreateNestedOneWithoutSaleProductsInput = {
+    create?: XOR<SaleCreateWithoutSaleProductsInput, SaleUncheckedCreateWithoutSaleProductsInput>
+    connectOrCreate?: SaleCreateOrConnectWithoutSaleProductsInput
     connect?: SaleWhereUniqueInput
   }
 
@@ -5283,12 +5283,12 @@ export namespace Prisma {
     connect?: ProductWhereUniqueInput
   }
 
-  export type SaleUpdateOneRequiredWithoutProductsNestedInput = {
-    create?: XOR<SaleCreateWithoutProductsInput, SaleUncheckedCreateWithoutProductsInput>
-    connectOrCreate?: SaleCreateOrConnectWithoutProductsInput
-    upsert?: SaleUpsertWithoutProductsInput
+  export type SaleUpdateOneRequiredWithoutSaleProductsNestedInput = {
+    create?: XOR<SaleCreateWithoutSaleProductsInput, SaleUncheckedCreateWithoutSaleProductsInput>
+    connectOrCreate?: SaleCreateOrConnectWithoutSaleProductsInput
+    upsert?: SaleUpsertWithoutSaleProductsInput
     connect?: SaleWhereUniqueInput
-    update?: XOR<XOR<SaleUpdateToOneWithWhereWithoutProductsInput, SaleUpdateWithoutProductsInput>, SaleUncheckedUpdateWithoutProductsInput>
+    update?: XOR<XOR<SaleUpdateToOneWithWhereWithoutSaleProductsInput, SaleUpdateWithoutSaleProductsInput>, SaleUncheckedUpdateWithoutSaleProductsInput>
   }
 
   export type ProductUpdateOneRequiredWithoutSaleProductsNestedInput = {
@@ -5426,7 +5426,7 @@ export namespace Prisma {
     quantity: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    sale: SaleCreateNestedOneWithoutProductsInput
+    sale: SaleCreateNestedOneWithoutSaleProductsInput
   }
 
   export type SaleProductUncheckedCreateWithoutProductInput = {
@@ -5521,23 +5521,23 @@ export namespace Prisma {
     data: XOR<SaleProductUpdateManyMutationInput, SaleProductUncheckedUpdateManyWithoutSaleInput>
   }
 
-  export type SaleCreateWithoutProductsInput = {
+  export type SaleCreateWithoutSaleProductsInput = {
     id?: string
     date: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type SaleUncheckedCreateWithoutProductsInput = {
+  export type SaleUncheckedCreateWithoutSaleProductsInput = {
     id?: string
     date: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type SaleCreateOrConnectWithoutProductsInput = {
+  export type SaleCreateOrConnectWithoutSaleProductsInput = {
     where: SaleWhereUniqueInput
-    create: XOR<SaleCreateWithoutProductsInput, SaleUncheckedCreateWithoutProductsInput>
+    create: XOR<SaleCreateWithoutSaleProductsInput, SaleUncheckedCreateWithoutSaleProductsInput>
   }
 
   export type ProductCreateWithoutSaleProductsInput = {
@@ -5563,25 +5563,25 @@ export namespace Prisma {
     create: XOR<ProductCreateWithoutSaleProductsInput, ProductUncheckedCreateWithoutSaleProductsInput>
   }
 
-  export type SaleUpsertWithoutProductsInput = {
-    update: XOR<SaleUpdateWithoutProductsInput, SaleUncheckedUpdateWithoutProductsInput>
-    create: XOR<SaleCreateWithoutProductsInput, SaleUncheckedCreateWithoutProductsInput>
+  export type SaleUpsertWithoutSaleProductsInput = {
+    update: XOR<SaleUpdateWithoutSaleProductsInput, SaleUncheckedUpdateWithoutSaleProductsInput>
+    create: XOR<SaleCreateWithoutSaleProductsInput, SaleUncheckedCreateWithoutSaleProductsInput>
     where?: SaleWhereInput
   }
 
-  export type SaleUpdateToOneWithWhereWithoutProductsInput = {
+  export type SaleUpdateToOneWithWhereWithoutSaleProductsInput = {
     where?: SaleWhereInput
-    data: XOR<SaleUpdateWithoutProductsInput, SaleUncheckedUpdateWithoutProductsInput>
+    data: XOR<SaleUpdateWithoutSaleProductsInput, SaleUncheckedUpdateWithoutSaleProductsInput>
   }
 
-  export type SaleUpdateWithoutProductsInput = {
+  export type SaleUpdateWithoutSaleProductsInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SaleUncheckedUpdateWithoutProductsInput = {
+  export type SaleUncheckedUpdateWithoutSaleProductsInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5632,7 +5632,7 @@ export namespace Prisma {
     quantity?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sale?: SaleUpdateOneRequiredWithoutProductsNestedInput
+    sale?: SaleUpdateOneRequiredWithoutSaleProductsNestedInput
   }
 
   export type SaleProductUncheckedUpdateWithoutProductInput = {
