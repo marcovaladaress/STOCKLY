@@ -4,7 +4,7 @@ import { db } from "@/lib/prisma";
 
 
 export const getTodayRevenue = async ():Promise <number> =>{
-  await new Promise((resolve)=> setTimeout(resolve, 1000))
+  await new Promise((resolve)=> setTimeout(resolve, 3000))
     const todayRevenueQuery = `SELECT SUM("SaleProduct"."unitPrice" * "SaleProduct"."quantity") as "todayRevenue" FROM "SaleProduct"
     JOIN "Sale" ON "SaleProduct"."saleId" = "Sale"."id" WHERE "Sale"."date" >= $1 AND "Sale"."date" <= $2`;
  

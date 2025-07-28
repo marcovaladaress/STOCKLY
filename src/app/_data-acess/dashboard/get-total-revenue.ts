@@ -3,7 +3,7 @@
 import { db } from "@/lib/prisma";
 
 export const getTotalRevenue = async (): Promise<number> => {
-    await new Promise((resolve)=> setTimeout(resolve, 1000))
+    await new Promise((resolve)=> setTimeout(resolve, 3000))
     const totalRevenueQuery = `SELECT SUM("SaleProduct"."unitPrice" * "SaleProduct"."quantity") as "totalRevenue" FROM "SaleProduct"
     JOIN "Sale" ON "SaleProduct"."saleId" = "Sale"."id"`;
 
