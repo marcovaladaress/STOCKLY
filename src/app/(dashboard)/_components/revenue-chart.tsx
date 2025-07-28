@@ -1,6 +1,7 @@
 "use client";
 
-import { DayTotalRevenue } from "@/app/_data-acess/dashboard/get-dashboard";
+
+import { DayTotalRevenue } from "@/app/_data-acess/dashboard/get-last-14-days-revenue";
 import {
   ChartConfig,
   ChartContainer,

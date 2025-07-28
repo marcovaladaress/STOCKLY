@@ -13,6 +13,7 @@ import TotalRevenueProduct from "./_components/produc-revenue-card";
 import Last14DaysRevenueChart from "./_components/las-14-days-revenue";
 import { Skeleton } from "@/components/ui/skeleton";
 import MostSoldProduct from "./_components/most-sold-product";
+import { MostSoldProductItemSkeleton } from "./_components/most-sold-products-item";
 
 const Home = async () => {
   return (
@@ -66,54 +67,9 @@ const Home = async () => {
                 <div className="h-5 w-48 rounded-md bg-gray-200" />
                 <div className="h-4 w-[86.26px] rounded-md bg-gray-200" />
               </div>
-
-              <div className="flex items-center justify-between  pt-5">
-                <div className="space-y-2">
-                  <div className="h-[22px] w-[91.23px] rounded-md bg-gray-200" />
-                  <div className="h-6 w-[91.23px] rounded-md bg-gray-200" />
-                  <div className="h-6 w-[105.23px] rounded-md bg-gray-200" />
-                </div>
-
-                <div>
-                  <div className="h-5 w-[105px] rounded-md bg-gray-200" />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between  pt-5">
-                <div className="space-y-2">
-                  <div className="h-[22px] w-[91.23px] rounded-md bg-gray-200" />
-                  <div className="h-6 w-[91.23px] rounded-md bg-gray-200" />
-                  <div className="h-6 w-[105.23px] rounded-md bg-gray-200" />
-                </div>
-
-                <div>
-                  <div className="h-5 w-[105px] rounded-md bg-gray-200" />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between  pt-5">
-                <div className="space-y-2">
-                  <div className="h-[22px] w-[91.23px] rounded-md bg-gray-200" />
-                  <div className="h-6 w-[91.23px] rounded-md bg-gray-200" />
-                  <div className="h-6 w-[105.23px] rounded-md bg-gray-200" />
-                </div>
-
-                <div>
-                  <div className="h-5 w-[105px] rounded-md bg-gray-200" />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between  pt-5">
-                <div className="space-y-2">
-                  <div className="h-[22px] w-[91.23px] rounded-md bg-gray-200" />
-                  <div className="h-6 w-[91.23px] rounded-md bg-gray-200" />
-                  <div className="h-6 w-[105.23px] rounded-md bg-gray-200" />
-                </div>
-
-                <div>
-                  <div className="h-5 w-[105px] rounded-md bg-gray-200" />
-                </div>
-              </div>
+              <MostSoldProductItemSkeleton />
+              <MostSoldProductItemSkeleton />
+              <MostSoldProductItemSkeleton />
             </Skeleton>
           }
         >

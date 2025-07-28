@@ -32,7 +32,7 @@ import {
 import { Product } from "@/generated/prisma";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusIcon, ShoppingCartIcon } from "lucide-react";
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import TableDropdownMenu from "./upsert-table-dropdown-menu";
@@ -49,6 +49,7 @@ const formSchema = z.object({
 type FormSchema = z.infer<typeof formSchema>;
 
 interface UpsertSheetContentProps {
+  isOpen: boolean;
   saleId?: string;
   products: Product[];
   productOptions: ComboboxOption[];
@@ -64,6 +65,7 @@ interface SelectProducts {
 }
 
 const UpsertSheetContent = ({
+  isOpen,
   saleId,
   products,
   productOptions,
@@ -92,6 +94,17 @@ const UpsertSheetContent = ({
       quantity: 1,
     },
   });
+
+  useEffect(() =>{
+    if(!isOpen){
+      form.reset();
+      setSelectProducts([]);
+    }
+  },[form,isOpen])
+
+  useEffect(()=>{
+    setSelectProducts(defaultSelectedProducts ?? []);
+  },[defaultSelectedProducts])
 
   const onSubmite = (data: FormSchema) => {
     const selectedProduct = products.find(
