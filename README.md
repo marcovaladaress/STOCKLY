@@ -1,23 +1,17 @@
 
 ![Dashboard do Stockly](https://github.com/marcovaladaress/STOCKLY/blob/main/public/dashboard.png?raw=true)
 
-# 📦 Stockly
+# Stockly 📦
 
 Sistema de controle de vendas simples e eficiente, desenvolvido com as funcionalidades mais modernas do Next.js App Router. Este projeto foi criado com o objetivo de praticar e demonstrar na prática os conceitos de Server Components, Server Actions, Suspense, Streaming, entre outros.
 
----
 
-## ✨ Demonstração
+## Demonstração
 
 🔗 [Acesse o projeto online](https://stockly-7z3j.vercel.app/sales)
 
-📸 **Preview da Interface:**
 
-
-
----
-
-## 🧠 Funcionalidades e conceitos aplicados
+## Funcionalidades e conceitos aplicados :
 
 - ✅ **Server Components** e **Client Components**
 - ✅ **Server Actions** com validação segura usando `next-safe-action`
@@ -30,7 +24,7 @@ Sistema de controle de vendas simples e eficiente, desenvolvido com as funcional
 
 ---
 
-## 🖼️ Interface
+## Interface
 
 A interface é focada em clareza e performance. Os dados das vendas são exibidos em cards com métricas e uma tabela geral.
 
@@ -39,9 +33,8 @@ Exemplos:
 - Receita do dia
 - Vendas por produto e estoque
 
----
 
-## 💻 Tecnologias utilizadas
+##  Tecnologias utilizadas 💻 
 
 - [Next.js 14 (App Router)](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
@@ -51,4 +44,4 @@ Exemplos:
 - [Next Safe Action](https://github.com/TheEdoRan/next-safe-action)
 - [React Suspense & Streaming](https://react.dev/reference/react/Suspense)
 
----
+
