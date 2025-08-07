@@ -27,8 +27,8 @@ const Sales = async () => {
 
   return (
     <div className="flex w-full flex-col space-y-6 overflow-auto  md:space-y-8 md:p-6 lg:p-8">
-      <div className="rounded-lg bg-white p-4 md:p-6 lg:p-8">
-        <Header className="flex gap-4 sm:flex-row justify-between items-center">
+      <div className="rounded-lg bg-white md:p-6 lg:p-8">
+        <Header className="flex gap-4 sm:flex-row p-4 justify-between items-center">
           <HeaderLeft>
             <HeaderSubTitle>Vendas</HeaderSubTitle>
             <HeaderTitle>Vendas</HeaderTitle>
