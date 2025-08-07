@@ -95,16 +95,16 @@ const UpsertSheetContent = ({
     },
   });
 
-  useEffect(() =>{
-    if(!isOpen){
+  useEffect(() => {
+    if (!isOpen) {
       form.reset();
       setSelectProducts([]);
     }
-  },[form,isOpen])
+  }, [form, isOpen]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setSelectProducts(defaultSelectedProducts ?? []);
-  },[defaultSelectedProducts])
+  }, [defaultSelectedProducts]);
 
   const onSubmite = (data: FormSchema) => {
     const selectedProduct = products.find(
@@ -187,16 +187,16 @@ const UpsertSheetContent = ({
   };
 
   return (
-    <SheetContent className="!max-w-[650px]">
+    <SheetContent className="w-full !max-w-[650px]">
       <SheetHeader>
-        <SheetTitle>Nova Venda</SheetTitle>
-        <SheetDescription>
+        <SheetTitle className="text-lg md:text-xl">Nova Venda</SheetTitle>
+        <SheetDescription className="text-sm">
           Insira as informações da venda abaixo
         </SheetDescription>
       </SheetHeader>
       <Form {...form}>
         <form
-          className="space-y-6 px-3"
+          className="space-y-4 px-2 md:space-y-6 md:px-3"
           onSubmit={form.handleSubmit(onSubmite)}
         >
           <FormField
@@ -204,7 +204,7 @@ const UpsertSheetContent = ({
             name="productId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Produto</FormLabel>
+                <FormLabel className="text-sm">Produto</FormLabel>
                 <FormControl>
                   <Combobox
                     placeholder="Selecione um produto"
@@ -222,7 +222,7 @@ const UpsertSheetContent = ({
             name="quantity"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Quantidade</FormLabel>
+                <FormLabel className="text-sm">Quantidade</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Digite a quantidade produto"
@@ -236,55 +236,67 @@ const UpsertSheetContent = ({
           />
 
           <Button type="submit" className="w-full" variant="secondary">
-            <PlusIcon />
+            <PlusIcon className="h-4 w-4" />
             Adicionar produto á venda
           </Button>
         </form>
       </Form>
-      <Table>
-        <TableCaption>Lista de produtos adicionados á venda.</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Produto</TableHead>
-            <TableHead>Preço Unitário</TableHead>
-            <TableHead>Quantidade</TableHead>
-            <TableHead>Total</TableHead>
-            <TableHead>Ações</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {selectedProducts.map((product) => (
-            <TableRow key={product.id}>
-              <TableCell>{product.name}</TableCell>
-              <TableCell>{formatCurrency(product.price)}</TableCell>
-              <TableCell>{product.quantity}</TableCell>
-              <TableCell>
-                {formatCurrency(product.price * product.quantity)}
-              </TableCell>
-              <TableCell>
-                <TableDropdownMenu
-                  product={product}
-                  onDelete={() => onDelete(product.id)}
-                />
-              </TableCell>
+      <div className="overflow-x-auto">
+        <Table>
+          <TableCaption>Lista de produtos adicionados á venda.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="whitespace-nowrap">Produto</TableHead>
+              <TableHead className="whitespace-nowrap">Preço Unit.</TableHead>
+              <TableHead className="whitespace-nowrap">Qtd</TableHead>
+              <TableHead className="whitespace-nowrap">Total</TableHead>
+              <TableHead className="whitespace-nowrap">Ações</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan={3}>Total</TableCell>
-            <TableCell>{formatCurrency(productTotal)}</TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-        </TableFooter>
-      </Table>
-      <SheetFooter>
+          </TableHeader>
+          <TableBody>
+            {selectedProducts.map((product) => (
+              <TableRow key={product.id}>
+                <TableCell className="max-w-[120px] truncate font-medium">
+                  {product.name}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {formatCurrency(product.price)}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {product.quantity}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {formatCurrency(product.price * product.quantity)}
+                </TableCell>
+                <TableCell>
+                  <TableDropdownMenu
+                    product={product}
+                    onDelete={() => onDelete(product.id)}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={3} className="font-semibold">
+                Total
+              </TableCell>
+              <TableCell className="font-semibold">
+                {formatCurrency(productTotal)}
+              </TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </div>
+      <SheetFooter className="mt-4">
         <Button
           className="w-full gap-2"
           disabled={selectedProducts.length === 0}
           onClick={onSubmiteSale}
         >
-          <ShoppingCartIcon />
+          <ShoppingCartIcon className="h-4 w-4" />
           Finalizar Venda
         </Button>
       </SheetFooter>

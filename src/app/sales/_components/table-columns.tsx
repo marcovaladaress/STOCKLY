@@ -16,10 +16,20 @@ export const SaleTablesColumns: ColumnDef<SaleTableColumn>[] = [
   {
     accessorKey: "productNames",
     header: "Produto",
+    cell: ({ row }) => (
+      <div className="max-w-[90px] truncate font-medium">
+        {row.getValue("productNames") as string}
+      </div>
+    ),
   },
   {
     accessorKey: "totalProducts",
-    header: "Quantidade de Produtos",
+    header: "Qtd Produtos",
+    cell: ({ row }) => (
+      <div className="text-center">
+        {row.getValue("totalProducts") as number}
+      </div>
+    ),
   },
   {
     header: "Valor Total",
@@ -27,7 +37,7 @@ export const SaleTablesColumns: ColumnDef<SaleTableColumn>[] = [
       row: {
         original: { totalAmount },
       },
-    }) => formatCurrency(totalAmount),
+    }) => <div className="font-medium">{formatCurrency(totalAmount)}</div>,
   },
   {
     header: "Data",
@@ -35,16 +45,22 @@ export const SaleTablesColumns: ColumnDef<SaleTableColumn>[] = [
       row: {
         original: { date },
       },
-    }) => new Date(date).toLocaleDateString("pt-BR"),
+    }) => (
+      <div className="whitespace-nowrap">
+        {new Date(date).toLocaleDateString("pt-BR")}
+      </div>
+    ),
   },
   {
     header: "Ações",
     cell: ({ row: { original: sale } }) => (
-      <SaleTableDropdownMenu
-        sale={sale}
-        products={sale.products}
-        productOptions={sale.productOptions}
-      />
+      <div className="flex justify-center">
+        <SaleTableDropdownMenu
+          sale={sale}
+          products={sale.products}
+          productOptions={sale.productOptions}
+        />
+      </div>
     ),
   },
 ];

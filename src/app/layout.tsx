@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "./_components/sidbar";
 import { Toaster } from "sonner";
+import MobileNav from "./_components/mobile-nav";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,8 +24,23 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${inter.className} antialiased`}>
         <div className="flex h-full w-full">
-          <Sidebar />
-          {children}
+          {/* Sidebar desktop */}
+          <div className="hidden lg:block">
+            <Sidebar />
+          </div>
+          
+          {/* Conteúdo principal */}
+          <div className="flex-1 flex flex-col min-h-screen">
+            {/* Mobile navigation */}
+            <div className="lg:hidden">
+              <MobileNav />
+            </div>
+            
+            {/* Conteúdo da página */}
+            <main className="flex-1 overflow-auto">
+              {children}
+            </main>
+          </div>
         </div>
         <Toaster
           position="top-center"

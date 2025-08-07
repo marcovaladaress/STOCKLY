@@ -48,7 +48,6 @@ const UpsertProductDialogContent = ({
       price: 0,
       stock: 1,
     },
-    
   });
 
   const { execute: executeUpsertProduct } = useAction(upsertProduct, {
@@ -56,26 +55,31 @@ const UpsertProductDialogContent = ({
       toast.error("Ocorreu um erro ao salvar o produto!");
     },
     onSuccess: () => {
-      toast.success("Produto salvo com sucesso")
+      toast.success("Produto salvo com sucesso");
       setDialogIsOpen(false);
     },
-    
   });
 
   const onSubmit = async (data: UpsertProductSchema) => {
-    executeUpsertProduct({...data, id: defaultValues?.id});
+    executeUpsertProduct({ ...data, id: defaultValues?.id });
   };
 
   const isEditing = !!defaultValues;
 
- 
   return (
-    <DialogContent>
+    <DialogContent className="sm:max-w-md">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-6 md:space-y-8"
+        >
           <DialogHeader>
-            <DialogTitle>{isEditing ? "Editar" : "Criar"} Produto</DialogTitle>
-            <DialogDescription>Insira as informações</DialogDescription>
+            <DialogTitle className="text-lg md:text-xl">
+              {isEditing ? "Editar" : "Criar"} Produto
+            </DialogTitle>
+            <DialogDescription className="text-sm">
+              Insira as informações
+            </DialogDescription>
           </DialogHeader>
 
           <FormField
@@ -83,7 +87,7 @@ const UpsertProductDialogContent = ({
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Nome do Produto</FormLabel>
+                <FormLabel className="text-sm">Nome do Produto</FormLabel>
                 <FormControl>
                   <Input placeholder="Digite o nome do produto" {...field} />
                 </FormControl>
@@ -97,7 +101,7 @@ const UpsertProductDialogContent = ({
             name="price"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Preço do Produto</FormLabel>
+                <FormLabel className="text-sm">Preço do Produto</FormLabel>
                 <FormControl>
                   <NumericFormat
                     thousandSeparator="."
@@ -123,7 +127,7 @@ const UpsertProductDialogContent = ({
             name="stock"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Estoque</FormLabel>
+                <FormLabel className="text-sm">Estoque</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -136,13 +140,21 @@ const UpsertProductDialogContent = ({
             )}
           />
 
-          <DialogFooter>
+          <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:gap-0">
             <DialogClose asChild>
-              <Button type="reset" variant="secondary">
+              <Button
+                type="reset"
+                variant="secondary"
+                className="w-full sm:w-auto"
+              >
                 Cancelar
               </Button>
             </DialogClose>
-            <Button disabled={form.formState.isSubmitting} type="submit">
+            <Button
+              disabled={form.formState.isSubmitting}
+              type="submit"
+              className="w-full sm:w-auto"
+            >
               {form.formState.isSubmitting && (
                 <Loader2 className="animate-spin" size={14} />
               )}

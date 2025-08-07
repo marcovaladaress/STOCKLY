@@ -7,10 +7,27 @@ html,
 body {
   height: 100%;
   width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   @apply bg-gray-100;
+}
+
+/* Melhorias para dispositivos móveis */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+/* Prevenir zoom em inputs em iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select,
+  textarea,
+  input {
+    font-size: 16px;
+  }
 }
 
 @theme inline {

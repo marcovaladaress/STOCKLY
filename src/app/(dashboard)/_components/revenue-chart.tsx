@@ -7,7 +7,7 @@ import {
   ChartContainer,
   ChartTooltip,
 } from "@/components/ui/chart";
-import { CartesianGrid, BarChart, XAxis, Bar } from "recharts";
+import { CartesianGrid, BarChart, XAxis, Bar, ResponsiveContainer } from "recharts";
 
 const chartConfig = {
   totalRevenue: {
@@ -21,19 +21,22 @@ interface RevenueChartProps {
 
 const RevenueChart = ({ data }: RevenueChartProps) => {
   return (
-    <ChartContainer config={chartConfig} className="min-h-0 min-w-full">
-      <BarChart data={data}>
-        <CartesianGrid vertical={false} />
-        <XAxis
-          dataKey="day"
-          tickLine={false}
-          tickMargin={10}
-          axisLine={false}
-        />
-        <ChartTooltip />
-        <Bar dataKey="totalRevenue" radius={4} />
-      </BarChart>
-    </ChartContainer>
+    <div className="h-[300px] md:h-[400px] w-full">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data}>
+          <CartesianGrid vertical={false} />
+          <XAxis
+            dataKey="day"
+            tickLine={false}
+            tickMargin={10}
+            axisLine={false}
+            fontSize={12}
+          />
+          <ChartTooltip />
+          <Bar dataKey="totalRevenue" radius={4} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 };
 

@@ -19,9 +19,9 @@ const UpsertSaleButton = (props: UpsertSaleButtonProps) => {
   return (
     <Sheet open={sheetIsOpen} onOpenChange={setSheetIsOpen}>
       <SheetTrigger asChild>
-        <Button>
-          <PlusIcon />
-          Nova Venda
+        <Button className="w-full sm:w-auto">
+          <PlusIcon className="h-4 w-4" />
+          <span className="ml-2">Nova Venda</span>
         </Button>
       </SheetTrigger>
       <UpsertSheetContent

@@ -11,20 +11,24 @@ import Header, {
 const ProductsPage = async () => {
   const products = await getProducts();
   return (
-    <div className="m-8 w-full space-y-8 overflow-auto rounded-lg bg-white p-8">
-      <Header>
-        <HeaderLeft>
-          <HeaderRight>Gestão de Produtos</HeaderRight>
-          <HeaderTitle>Produtos</HeaderTitle>
-        </HeaderLeft>
-        <HeaderRight>
-          <AddProductButton />
-        </HeaderRight>
-      </Header>
-      <DataTable
-        columns={productTableColumns}
-        data={JSON.parse(JSON.stringify(products))}
-      />
+    <div className="w-full space-y-6 overflow-auto p-0 mt-3   md:space-y-8 md:p-6 lg:p-8">
+      <div className="rounded-lg bg-white p-4 md:p-6 lg:p-8">
+        <Header className="items-center gap-4 sm:flex-row sm:justify-between">
+          <HeaderLeft>
+            <HeaderRight>Gestão de Produtos</HeaderRight>
+            <HeaderTitle>Produtos</HeaderTitle>
+          </HeaderLeft>
+          <HeaderRight>
+            <AddProductButton />
+          </HeaderRight>
+        </Header>
+        <div className="mt-6">
+          <DataTable
+            columns={productTableColumns}
+            data={JSON.parse(JSON.stringify(products))}
+          />
+        </div>
+      </div>
     </div>
   );
 };

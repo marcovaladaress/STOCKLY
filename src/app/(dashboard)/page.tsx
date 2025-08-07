@@ -17,7 +17,7 @@ import { MostSoldProductItemSkeleton } from "./_components/most-sold-products-it
 
 const Home = async () => {
   return (
-    <div className="m-8 flex w-full flex-col space-y-8 overflow-auto rounded-lg">
+    <div className="flex w-full flex-col space-y-6 overflow-auto p-4 md:space-y-8 md:p-6 lg:p-8">
       <Header>
         <HeaderLeft>
           <HeaderSubTitle>Visão geral dos dados </HeaderSubTitle>
@@ -25,7 +25,7 @@ const Home = async () => {
         </HeaderLeft>
       </Header>
 
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
         <Suspense fallback={<SummaryCardSkeleton />}>
           <TotalRevenueCard />
         </Suspense>
@@ -34,7 +34,7 @@ const Home = async () => {
         </Suspense>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
         <Suspense fallback={<SummaryCardSkeleton />}>
           <SaleRevenueCard />
         </Suspense>
@@ -47,10 +47,10 @@ const Home = async () => {
           <TotalRevenueProduct />
         </Suspense>
       </div>
-      <div className="grid min-h-0 grid-cols-[1.97fr_1fr] gap-6">
+      <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-[1.97fr_1fr]">
         <Suspense
           fallback={
-            <Skeleton className="bg-white p-6">
+            <Skeleton className="bg-white p-4 md:p-6">
               <div className="space-y-2">
                 <div className="h-5 w-48 rounded-md bg-gray-200" />
                 <div className="h-4 w-[86.26px] rounded-md bg-gray-200" />
@@ -62,7 +62,7 @@ const Home = async () => {
         </Suspense>
         <Suspense
           fallback={
-            <Skeleton className="bg-white p-6">
+            <Skeleton className="bg-white p-4 md:p-6">
               <div className="space-y-2">
                 <div className="h-5 w-48 rounded-md bg-gray-200" />
                 <div className="h-4 w-[86.26px] rounded-md bg-gray-200" />

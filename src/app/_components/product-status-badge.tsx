@@ -18,7 +18,7 @@ const ProductStatusBadge = ({status}: ProductStatusBadgeProps) => {
   return (
     <Badge
       variant={label === "Em estoque" ? "default" : "destructive"}
-      className="items-center gap-1.5"
+      className="items-center gap-1.5 text-xs"
     >
      
       {label}

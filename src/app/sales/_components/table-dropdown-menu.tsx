@@ -70,40 +70,50 @@ const SaleTableDropdownMenu = ({
       <AlertDialog>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost">
-              <MoreHorizontalIcon size={16} />
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <MoreHorizontalIcon size={14} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem onClick={handleCopyToClipboardClick}>
-              <ClipboardCopy size={16} />
+          <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuItem
+              onClick={handleCopyToClipboardClick}
+              className="text-sm"
+            >
+              <ClipboardCopy size={14} />
               Copiar Id
             </DropdownMenuItem>
             <SheetTrigger asChild>
-              <DropdownMenuItem>
-                <EditIcon size={16} />
+              <DropdownMenuItem className="text-sm">
+                <EditIcon size={14} />
                 Editar
               </DropdownMenuItem>
             </SheetTrigger>
             <AlertDialogTrigger>
-              <DropdownMenuItem>
-                <TrashIcon size={16} />
+              <DropdownMenuItem className="text-sm">
+                <TrashIcon size={14} />
                 Deletar
               </DropdownMenuItem>
             </AlertDialogTrigger>
           </DropdownMenuContent>
         </DropdownMenu>
-        <AlertDialogContent>
+        <AlertDialogContent className="sm:max-w-md">
           <AlertDialogHeader>
-            <AlertDialogTitle>Voçe tem certeza?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-lg">
+              Voçe tem certeza?
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-sm">
               Você esta prestes a excluir esta venda. Esta ação não pode ser
               desfeita. Deseja continuar ?
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction onClick={handleConfirmDeleteClick}>
+          <AlertDialogFooter className="flex flex-col gap-2 sm:flex-row sm:gap-0">
+            <AlertDialogCancel className="w-full sm:w-auto">
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleConfirmDeleteClick}
+              className="w-full sm:w-auto"
+            >
               Continuar
             </AlertDialogAction>
           </AlertDialogFooter>

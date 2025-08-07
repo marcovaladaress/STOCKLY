@@ -38,26 +38,27 @@ const ProductTableDropdownMenu = ({
       <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost">
-              <MoreHorizontalIcon size={16} />
+            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+              <MoreHorizontalIcon size={14} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent align="end" className="w-40">
             <DropdownMenuItem
               onClick={handleCopyToClipboardClick }
+              className="text-sm"
             >
-              <ClipboardCopy size={16} />
+              <ClipboardCopy size={14} />
               Copiar Id
             </DropdownMenuItem>
             <DialogTrigger asChild>
-              <DropdownMenuItem>
-                <EditIcon size={16} />
+              <DropdownMenuItem className="text-sm">
+                <EditIcon size={14} />
                 Editar
               </DropdownMenuItem>
             </DialogTrigger>
             <AlertDialogTrigger>
-              <DropdownMenuItem>
-                <TrashIcon size={16} />
+              <DropdownMenuItem className="text-sm">
+                <TrashIcon size={14} />
                 Deletar
               </DropdownMenuItem>
             </AlertDialogTrigger>

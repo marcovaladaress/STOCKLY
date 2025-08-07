@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import React, { ReactNode } from "react";
 
 export const HeaderTitle = ({ children }: { children: ReactNode }) => {
-  return <h1 className="text-2xl font-bold">{children}</h1>;
+  return <h1 className="text-xl md:text-2xl font-bold">{children}</h1>;
 };
 
 export const HeaderSubTitle = ({ children }: { children: ReactNode }) => {
@@ -18,7 +18,7 @@ export const HeaderLeft = ({ children }: { children: ReactNode }) => {
 };
 
 export const HeaderRight = ({ children }: { children: ReactNode }) => {
-  return <div>{children}</div>;
+  return <div className="flex items-center">{children}</div>;
 };
 
 const Header = ({
@@ -29,7 +29,7 @@ const Header = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex w-full items-center justify-between", className)}>
+    <div className={cn("flex w-full items-start sm:items-center justify-between", className)}>
       {children}
     </div>
   );
